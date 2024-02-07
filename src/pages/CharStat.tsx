@@ -1,4 +1,4 @@
-import { CharSearchBar } from '@/components/charStat'
+import { CharSearchBar } from '@/components'
 
 function CharStat() {
   return (

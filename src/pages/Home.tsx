@@ -1,5 +1,5 @@
-import { SearchBar, DownloadBtn } from '@/components'
 import { Header, Footer } from '@/layout'
+import { SearchBar, DownloadBtn } from '@/components'
 
 // import { searchUserInfo } from './api'
 

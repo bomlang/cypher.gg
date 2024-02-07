@@ -5,7 +5,7 @@ export interface Player {
   represent: PlayerRepresent
 }
 
-interface PlayerRepresent {
+export interface PlayerRepresent {
   characterId: string
   characterName: string
 }
