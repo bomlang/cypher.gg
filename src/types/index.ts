@@ -1,3 +1,6 @@
 export * from './player'
 export * from './char'
 export * from './rank'
+export * from './matchData'
+export * from './player'
+export * from './playInfo'

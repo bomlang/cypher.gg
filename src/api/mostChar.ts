@@ -1,21 +1,23 @@
-import { matchHistory } from '.'
 import { Match } from '@/types'
+import { matchHistory } from '.'
 
 export const mostChar = async (playerId: string) => {
   try {
     const response = await matchHistory(playerId)
 
-    // 가정: response가 배열이고, 각 요소가 matches 속성을 가지고 있고, 그 안에 rows 속성과 playInfo 속성이 있다고 가정합니다.
+    const tierName = response?.tierName
+    console.log(tierName)
+
     const matches = response.matches.rows
 
     const characters = matches.map(
-      (item: Match) => item.playInfo?.characterName || ''
+      (item: Match) => item.playInfo?.characterId || ''
     )
 
     // 모스트 캐릭터 찾기
     const mostCharacters = findMostCharacters(characters, 3)
 
-    console.log('Most Characters:', mostCharacters)
+    return { mostCharacters }
   } catch (error) {
     console.error('Error fetching data:', error)
   }

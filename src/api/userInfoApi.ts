@@ -11,7 +11,6 @@ export const userInfoApi = async (playerId: string) => {
       }
     )
 
-    console.log(response)
     return response.data
   } catch (error) {
     console.error('예상치 못한 에러가 발생하였습니다🥺 :', error)

@@ -1,4 +1,4 @@
-import { rankApi } from '@/api'
+import { rankApi, userInfoApi } from '@/api'
 import { Rank } from '@/types'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
@@ -6,21 +6,27 @@ import { mostChar } from '@/api/mostChar'
 
 export const RankGraph = () => {
   const [rankData, setRankData] = useState<null | Rank[]>(null)
+  // const [mostChars, setMostChars] = useState<undefined | MostChar[]>()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await rankApi()
-        setRankData(data)
         const playerIds = data.map((item: Rank) => item.playerId)
+        //  tier가 안나오는 문제 해결해야함.
 
         const matchHistoryResults = await Promise.all(
-          playerIds.map(async (playerId: string) => {
-            return mostChar(playerId)
-          })
+          playerIds.map(async (playerId: string) => mostChar(playerId))
         )
 
-        console.log(matchHistoryResults)
+        const mergedData = data.map((player: Rank, index: number) => ({
+          ...player,
+          mostChars: matchHistoryResults[index]?.mostCharacters || []
+        }))
+
+        console.log(mergedData)
+
+        setRankData(mergedData)
       } catch (error) {
         console.error('Error fetching rank data:', error)
       }
@@ -66,11 +72,21 @@ export const RankGraph = () => {
               <td className="w-[60px] text-center py-6">
                 {player.ratingPoint}
               </td>
-              <td className="w-[130px] py-6">
-                <Link to="/"></Link>
-                <Link to="/"></Link>
-                <Link to="/"></Link>
+
+              <td className="w-[130px] py-6 flex gap-2">
+                {player.mostChars.map((mostChar, index) => (
+                  <Link
+                    to="/"
+                    key={index}>
+                    <img
+                      src={`https://img-api.neople.co.kr/cy/characters/${mostChar}?zoom=<zoom>`}
+                      alt=""
+                      className="rounded-full"
+                    />
+                  </Link>
+                ))}
               </td>
+
               <td className="w-[50px] text-center py-6">{player.grade}</td>
             </tr>
           ))}

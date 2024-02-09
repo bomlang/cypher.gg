@@ -13,7 +13,6 @@ export const rankApi = async () => {
       }
     )
 
-    // console.log(response.data.rows)
     return response.data.rows
   } catch (error) {
     console.error('Error fetching data:', error)

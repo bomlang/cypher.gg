@@ -9,6 +9,7 @@ export interface Rank {
   rank: number
   ratingPoint: number
   represent: Character
+  mostChars: string[]
 }
 
 // interface Rank {}
