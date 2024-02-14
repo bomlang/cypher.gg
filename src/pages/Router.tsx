@@ -14,6 +14,10 @@ const routes = [
   {
     path: '/Rank',
     component: lazy(() => import('./Rank'))
+  },
+  {
+    path: '/CharRank',
+    component: lazy(() => import('./CharRank'))
   }
 ]
 

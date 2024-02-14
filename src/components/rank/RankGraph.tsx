@@ -1,4 +1,4 @@
-import { rankApi, userInfoApi } from '@/api'
+import { rankApi } from '@/api'
 import { Rank } from '@/types'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
