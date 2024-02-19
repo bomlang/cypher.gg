@@ -1,4 +1,4 @@
-export const CharNav = () => {
+export const CharTitle = () => {
   return (
     <>
       <div></div>

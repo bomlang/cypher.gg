@@ -34,13 +34,11 @@ export const CharList = () => {
 
         <ul className="flex flex-wrap gap-2.5 w-[292px] my-2 border-t border-gray200 py-2">
           {chars?.map(item => (
-            <li>
+            <li key={item.characterId}>
               <Link
                 to="/"
                 className="">
-                <div
-                  key={item.characterId}
-                  className="w-[50px] h-[62px] flex flex-col">
+                <div className="w-[50px] h-[62px] flex flex-col">
                   <img
                     src={`https://img-api.neople.co.kr/cy/characters/${item.characterId}?zoom=1`}
                     alt={item.characterName}

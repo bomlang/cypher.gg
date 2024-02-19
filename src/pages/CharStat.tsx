@@ -1,11 +1,12 @@
 import { charApi } from '@/api'
 import { useEffect } from 'react'
-import { CharSearchBar, CharNav } from '@/components'
+import { CharSearchBar, CharTitle } from '@/components'
 
 function CharStat() {
   useEffect(() => {
     const fetchData = async () => {
       await charApi()
+      // await userApi('학뀨뀨잉')
     }
 
     fetchData()
@@ -14,7 +15,7 @@ function CharStat() {
   return (
     <div>
       <CharSearchBar />
-      <CharNav />
+      <CharTitle />
     </div>
   )
 }

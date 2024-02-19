@@ -20,7 +20,7 @@ interface Matches {
   date: Date
   gameTypeId: string
   next: string
-  rows: Match
+  rows: Match[]
 }
 
 export interface Match {

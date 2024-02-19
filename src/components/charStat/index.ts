@@ -1,3 +1,3 @@
 export * from './CharSearchBar'
-export * from './CharNav'
+export * from './CharTitle'
 export * from './CharHeader'

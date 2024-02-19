@@ -8,16 +8,20 @@ const routes = [
     component: lazy(() => import('./Home'))
   },
   {
-    path: '/CharStat',
+    path: '/charStat',
     component: lazy(() => import('./CharStat'))
   },
   {
-    path: '/Rank',
+    path: '/rank',
     component: lazy(() => import('./Rank'))
   },
   {
-    path: '/CharRank',
+    path: '/charRank',
     component: lazy(() => import('./CharRank'))
+  },
+  {
+    path: '/player',
+    component: lazy(() => import('./Player'))
   }
 ]
 

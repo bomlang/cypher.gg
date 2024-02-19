@@ -15,8 +15,8 @@ export const userApi = async (nickname: string) => {
       }
     )
 
-    return response.data.rows[0]
     // console.log(response.data.rows[0])
+    return response.data.rows[0]
   } catch (error) {
     console.error('Error fetching data:', error)
   }
