@@ -58,6 +58,7 @@ export const PlayerMain = () => {
           key={item.date}
           match={item}
           gameType={game.matches.gameTypeId}
+          playerId={game.playerId}
         />
       ))}
 

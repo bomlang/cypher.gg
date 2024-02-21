@@ -19,7 +19,12 @@ export default {
         gray500: '#758592',
         gray900: '#202D37',
         navTextHover: '#B3CDFF',
-        navAsideBg: '#FBD353'
+        navAsideBg: '#FBD353',
+        unique: '#EB6876',
+        rare: '#788AFF',
+        Uncommon: '#2AA79D',
+        common: '#808080',
+        notWorn: '#383838'
       },
       backgroundImage: {
         whiteStar: "url('/starBookMark.svg')",

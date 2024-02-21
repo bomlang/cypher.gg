@@ -1,4 +1,4 @@
-import { PlayerRepresent } from '.'
+import { ItemData, PlayerRepresent } from '.'
 import { Attribute } from './attribute'
 import { PlayInfo } from './playInfo'
 
@@ -14,6 +14,22 @@ export interface MatchData {
   represent: PlayerRepresent
   tierName: string
   tierTest: boolean
+}
+
+export interface MatchDetailData {
+  date: Date
+  gameTypeId: string
+  map: Map
+  players: Player[]
+}
+
+export interface Player {
+  items: ItemData[]
+  map: Map
+  nickname: string
+  playInfo: PlayInfo
+  playerId: string
+  position: Position
 }
 
 interface Matches {

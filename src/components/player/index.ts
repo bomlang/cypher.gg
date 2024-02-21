@@ -1,3 +1,6 @@
 export * from './PlayerHeader'
 export * from './PlayerAside'
 export * from './PlayerMain'
+export * from './PlayerGameResult'
+export * from './itemSlot'
+export * from './NotWornItem'

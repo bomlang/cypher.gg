@@ -1,3 +1,6 @@
 export * from './rankData'
 export * from './playTimeCalc'
 export * from './checkWinOrLose'
+export * from './calcKDA'
+export * from './itemRarityCheck'
+export * from './itemEquipSlotCode'

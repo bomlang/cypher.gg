@@ -18,6 +18,7 @@ export interface PlayInfo {
   maxLifeTime: number
   minLifeTime: number
   partyInfo: PartyInfo
+  partyId?: string
   partyUserCount: number
   playTime: number
   playTypeName: string
