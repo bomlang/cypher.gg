@@ -20,7 +20,7 @@ const routes = [
     component: lazy(() => import('./CharRank'))
   },
   {
-    path: '/player',
+    path: '/player/:nickname',
     component: lazy(() => import('./Player'))
   }
 ]

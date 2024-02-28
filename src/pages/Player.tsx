@@ -1,20 +1,27 @@
-import { matchHistory } from '@/api'
-import { PlayerAside, PlayerHeader, PlayerMain } from '@/components/player'
-import { usePlayerPrevGameStore } from '@/zustand'
 import { useEffect } from 'react'
+import { matchHistory, userApi } from '@/api'
+import { useParams } from 'react-router-dom'
+import { usePlayerPrevGameStore } from '@/zustand'
+import { PlayerAside, PlayerHeader, PlayerMain } from '@/components/player'
 
 function Player() {
+  const { nickname } = useParams()
+
   const { setGameHistory } = usePlayerPrevGameStore()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const matchData = await matchHistory(
-          '6e3801b91890a2124d22b30a6d912fda',
-          'normal'
-        )
-        console.log(matchData)
-        setGameHistory(matchData)
+        const userData = await userApi(nickname as string)
+
+        if (userData) {
+          const matchData = await matchHistory(userData.playerId, 'normal')
+
+          setGameHistory(matchData)
+
+          // const slice = matchData.matches.rows.slice(0, 20)
+          // console.log(slice)
+        }
       } catch (error) {
         console.error('Error fetching match data:', error)
       }
@@ -24,13 +31,13 @@ function Player() {
   }, [])
 
   return (
-    <>
+    <main className="bg-gray200">
       <PlayerHeader />
-      <div>
+      <div className="flex">
         <PlayerAside />
         <PlayerMain />
       </div>
-    </>
+    </main>
   )
 }
 

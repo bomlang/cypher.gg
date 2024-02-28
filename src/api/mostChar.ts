@@ -5,8 +5,8 @@ export const mostChar = async (playerId: string) => {
   try {
     const response = await matchHistory(playerId, 'nomal')
 
-    const tierName = response?.tierName
-    console.log(tierName)
+    // const tierName = response?.tierName
+    // console.log(tierName)
 
     const matches = response.matches.rows
 

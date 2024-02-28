@@ -35,5 +35,8 @@ export interface PlayInfo {
 }
 
 interface PartyInfo {
-  name: string
+  characterId: string
+  characterName: string
+  nickname: string
+  playerId: string
 }

@@ -21,6 +21,12 @@ export interface MatchDetailData {
   gameTypeId: string
   map: Map
   players: Player[]
+  teams: Team[]
+}
+
+export interface Team {
+  players: Player[]
+  result: string
 }
 
 export interface Player {
@@ -30,6 +36,8 @@ export interface Player {
   playInfo: PlayInfo
   playerId: string
   position: Position
+  team: string
+  teamResult: string
 }
 
 interface Matches {

@@ -1,27 +1,33 @@
 import { userApi } from '@/api'
 import { Player } from '@/types'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const SearchBar = () => {
+  const navigate = useNavigate()
+
   const [btnChange, setBtnChange] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
   const [favUserCheck, setFavUserCheck] = useState(false)
   const [basicUserData, setBasicUserData] = useState<Player | null>(null)
 
   const handleUserSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
+    setSearchTerm(value)
 
     if (value) {
       const retrievedUserData = await userApi(value)
       setBasicUserData(retrievedUserData)
+      console.log(retrievedUserData)
     }
   }
 
-  useEffect(() => {
-    // const data = async () => {
-    //   await charApi()
-    // }
-    // data()
-  }, [])
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 엔터 키를 누르고, 입력값이 비어 있지 않으면 페이지 이동합니다.
+    if (e.key === 'Enter' && searchTerm.trim() !== '') {
+      navigate(`/player/${searchTerm}`)
+    }
+  }
 
   return (
     <form className="rounded-[30px] bg-white w-[800px] h-16 border-2 px-10 flex items-center justify-center ">
@@ -38,9 +44,10 @@ export const SearchBar = () => {
           placeholder="플레이어 이름"
           className="focus:outline-none "
           onChange={handleUserSearch}
+          onKeyDown={handleKeyPress}
         />
 
-        <nav className="w-[660px] h-[328px] fixed top-[120px] shadow-lg hidden">
+        <nav className="w-[660px] h-[328px] absolute top-[56px] right-[35px] shadow-lg bg-white ">
           <div className="">
             <button
               type="button"
