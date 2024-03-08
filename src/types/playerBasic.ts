@@ -1,4 +1,4 @@
-export interface Player {
+export interface PlayerBasic {
   grade: number
   nickname: string
   playerId: string

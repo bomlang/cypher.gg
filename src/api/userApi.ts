@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const userApi = async (nickname: string) => {
+export const userApi = async <T>(nickname: string): Promise<T> => {
   const encodingNickname = encodeURIComponent(nickname)
 
   try {
@@ -16,8 +16,9 @@ export const userApi = async (nickname: string) => {
     )
 
     // console.log(response.data.rows[0])
-    return response.data.rows[0]
+    return response.data.rows[0] as T
   } catch (error) {
     console.error('Error fetching data:', error)
+    throw error
   }
 }
