@@ -13,23 +13,25 @@ export const SearchBar = () => {
 
   const [searchTerm, setSearchTerm] = useState('')
   const [btnChange, setBtnChange] = useState(false)
+  const [isSearchFocused, setIsSearchFocused] = useState(false)
   const [recentSearchHistory, setRecentSearchHistory] = useState<string[]>()
   const [favUserCheck, setFavUserChecks] = useState<{ [key: string]: boolean }>(
     {}
   )
-  const [isNavigationVisible, setNavigationVisible] = useState(false)
+  // const [isNavigationVisible, setNavigationVisible] = useState(false)
   const [basicUserData, setBasicUserData] = useState<PlayerBasic | null>(null)
 
   const handleUserSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setSearchTerm(value)
+    setIsSearchFocused(true)
 
     if (value) {
-      setNavigationVisible(true)
+      // setNavigationVisible(true)
       const retrievedUserData = await userApi<PlayerBasic>(value)
       setBasicUserData(retrievedUserData)
     } else {
-      setNavigationVisible(false)
+      // setNavigationVisible(false)
     }
   }
 
@@ -49,11 +51,28 @@ export const SearchBar = () => {
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // 엔터 키를 누르고, 입력값이 비어 있지 않으면 페이지 이동합니다.
+    // 엔터 키를 누르고, 입력값이 비어 있지 않으면 페이지 이동한다.
     if (e.key === 'Enter' && searchTerm.trim() !== '') {
       navigate(`/player/${searchTerm}`)
       saveToLocalStorage(searchTerm)
     }
+  }
+
+  const handleBlur = (e: React.FocusEvent) => {
+    const relatedTarget = e.relatedTarget
+
+    // relatedTarget이 nav 내부의 요소거나 해당 id속성의 요소일 경우에는 숨기지 않는다.
+    if (
+      relatedTarget &&
+      (relatedTarget.closest('nav') ||
+        relatedTarget.id === 'nicknameSearch' ||
+        relatedTarget.id === 'favUserCheckbox')
+    ) {
+      return
+    }
+
+    // 다른 외부 요소를 클릭한 경우에는 nav를 숨김
+    setIsSearchFocused(false)
   }
 
   useEffect(() => {
@@ -76,14 +95,16 @@ export const SearchBar = () => {
           placeholder="플레이어 이름"
           className="focus:outline-none "
           onChange={handleUserSearch}
+          onFocus={() => setIsSearchFocused(true)}
+          onBlur={handleBlur}
           onKeyDown={handleKeyPress}
         />
 
         <nav
           className={`w-[660px] h-[328px] absolute top-[56px] right-[35px] shadow-lg bg-white ${
-            isNavigationVisible ? 'block' : 'hidden'
+            isSearchFocused ? 'block' : 'hidden'
           }`}>
-          <div className="">
+          <div>
             <button
               type="button"
               className={`w-[50%] h-[34px] text-gray400 ${
@@ -109,7 +130,7 @@ export const SearchBar = () => {
           <ul className="my-1">
             {recentSearchHistory?.map((item: string, index: number) => (
               <li
-                className="py-2 px-3 flex items-center hover:bg-gray100"
+                className="py-2 px-3 flex items-center hover:bg-gray100 gap-2"
                 key={index}>
                 <Link to={`/player/${item}`}>
                   <span>{item}</span>
@@ -127,16 +148,16 @@ export const SearchBar = () => {
                     id="favUserCheckbox"
                     className="hidden"
                   />
+                  <button
+                    type="button"
+                    className="w-6 h-6"
+                    onClick={() => handleRecentSearchDelete(item)}>
+                    <img
+                      src="/xButton.svg"
+                      alt="플레이어 최근검색 제거"
+                    />
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="w-6 h-6"
-                  onClick={() => handleRecentSearchDelete(item)}>
-                  <img
-                    src="/xButton.svg"
-                    alt="플레이어 최근검색 제거"
-                  />
-                </button>
               </li>
             ))}
           </ul>
