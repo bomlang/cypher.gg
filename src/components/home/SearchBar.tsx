@@ -8,6 +8,8 @@ import {
   saveToLocalStorage
 } from '@/utils'
 
+// 즐겨찾기 기능 추가
+
 export const SearchBar = () => {
   const navigate = useNavigate()
 
@@ -15,11 +17,10 @@ export const SearchBar = () => {
   const [btnChange, setBtnChange] = useState(false)
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const [recentSearchHistory, setRecentSearchHistory] = useState<string[]>()
+  const [basicUserData, setBasicUserData] = useState<PlayerBasic | null>(null)
   const [favUserCheck, setFavUserChecks] = useState<{ [key: string]: boolean }>(
     {}
   )
-  // const [isNavigationVisible, setNavigationVisible] = useState(false)
-  const [basicUserData, setBasicUserData] = useState<PlayerBasic | null>(null)
 
   const handleUserSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -27,11 +28,8 @@ export const SearchBar = () => {
     setIsSearchFocused(true)
 
     if (value) {
-      // setNavigationVisible(true)
       const retrievedUserData = await userApi<PlayerBasic>(value)
       setBasicUserData(retrievedUserData)
-    } else {
-      // setNavigationVisible(false)
     }
   }
 
@@ -61,17 +59,19 @@ export const SearchBar = () => {
   const handleBlur = (e: React.FocusEvent) => {
     const relatedTarget = e.relatedTarget
 
-    // relatedTarget이 nav 내부의 요소거나 해당 id속성의 요소일 경우에는 숨기지 않는다.
+    // relatedTarget이 존재하고, nav 내부의 요소거나 해당 id 속성의 요소일 경우에는 숨기지 않음
     if (
       relatedTarget &&
       (relatedTarget.closest('nav') ||
         relatedTarget.id === 'nicknameSearch' ||
-        relatedTarget.id === 'favUserCheckbox')
+        relatedTarget.id === 'favUserCheckbox' ||
+        (relatedTarget.tagName &&
+          relatedTarget.tagName.toLowerCase() === 'label'))
     ) {
       return
     }
 
-    // 다른 외부 요소를 클릭한 경우에는 nav를 숨김
+    // relatedTarget이 없거나 다른 외부 요소를 클릭한 경우에는 nav를 숨김
     setIsSearchFocused(false)
   }
 
@@ -101,7 +101,8 @@ export const SearchBar = () => {
         />
 
         <nav
-          className={`w-[660px] h-[328px] absolute top-[56px] right-[35px] shadow-lg bg-white ${
+          id="navDetail"
+          className={`w-[660px] absolute top-[56px] right-[35px] shadow-lg bg-white ${
             isSearchFocused ? 'block' : 'hidden'
           }`}>
           <div>
@@ -137,9 +138,9 @@ export const SearchBar = () => {
                 </Link>
 
                 <div className="flex items-center">
-                  <label
+                  {/* <label
                     htmlFor="favUserCheckbox"
-                    className={`${
+                    className={`favUserCheckbox ${
                       favUserCheck[item] ? 'bg-yellowStar' : 'bg-whiteStar'
                     } w-6 h-6 inline-block cursor-pointer`}
                     onClick={() => handleCheckboxClick(item)}></label>
@@ -147,7 +148,13 @@ export const SearchBar = () => {
                     type="checkbox"
                     id="favUserCheckbox"
                     className="hidden"
-                  />
+                  /> */}
+                  <button
+                    type="button"
+                    className={`favUserCheckbox ${
+                      favUserCheck[item] ? 'bg-yellowStar' : 'bg-whiteStar'
+                    } w-6 h-6 inline-block cursor-pointer`}
+                    onClick={() => handleCheckboxClick(item)}></button>
                   <button
                     type="button"
                     className="w-6 h-6"
